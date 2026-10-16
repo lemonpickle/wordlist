@@ -896,7 +896,7 @@ window.WORDS = [
   {
     "number": 150,
     "meaning": "often",
-    "word": "ófn",
+    "word": "ófen",
     "language": "English"
   },
   {
@@ -1130,7 +1130,7 @@ window.WORDS = [
   {
     "number": 189,
     "meaning": "open",
-    "word": "opn",
+    "word": "open",
     "language": "English"
   },
   {
