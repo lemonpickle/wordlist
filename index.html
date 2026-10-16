@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f6ef">
+  <meta name="description" content="A collection of words from around the world, with their source languages and English meanings.">
+  <title>Wordlist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f8f6ef;
+      --ink: #203b32;
+      --muted: #788078;
+      --line: #e8e4d9;
+      --green: #315e4c;
+      --green-pale: #e7eee7;
+      --coral: #d47d61;
+      --white: #fffefa;
+      --sans: "DM Sans", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#d8d3c5 0.55px, transparent 0.55px);
+      background-size: 8px 8px;
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select { font: inherit; }
+
+    .page-shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 25px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .topnav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .topnav a:hover,
+    .topnav a:focus-visible {
+      color: var(--green);
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1.5px solid var(--green);
+      border-radius: 50%;
+      color: var(--green);
+      font-size: 20px;
+      transform: rotate(-9deg);
+    }
+
+    .edition {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 66px auto 44px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 600;
+      letter-spacing: -.055em;
+      line-height: 1.08;
+    }
+
+    .intro-copy {
+      max-width: 490px;
+      margin: 17px auto 0;
+      color: #69746b;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .intro-copy strong { color: var(--green); font-weight: 600; }
+
+    .collection {
+      position: relative;
+      padding: 28px;
+      border: 1px solid #e5e0d4;
+      border-radius: 5px;
+      background: rgb(255 254 250 / 82%);
+      box-shadow: 0 12px 40px rgb(61 57 43 / 5%);
+    }
+
+    .alphabet-panel {
+      position: relative;
+      margin-bottom: 22px;
+      padding: 28px;
+      border: 1px solid #e5e0d4;
+      border-radius: 5px;
+      background: rgb(255 254 250 / 82%);
+      box-shadow: 0 12px 40px rgb(61 57 43 / 5%);
+    }
+
+    .alphabet-panel::before, .alphabet-panel::after {
+      position: absolute;
+      top: -5px;
+      width: 46px;
+      height: 11px;
+      background: rgb(224 191 130 / 45%);
+      content: "";
+    }
+
+    .alphabet-panel::before { left: 34px; transform: rotate(-3deg); }
+    .alphabet-panel::after { right: 34px; transform: rotate(3deg); }
+
+    .alphabet-title {
+      margin: 0 0 20px;
+      font-size: 24px;
+      font-weight: 600;
+      text-transform: lowercase;
+    }
+
+    .alphabet-nav {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .letter-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 56px;
+      border: 1px solid #dfe7df;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s, border-color .18s, transform .18s;
+    }
+
+    .letter-description {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .letter-button:hover,
+    .letter-button:focus-visible {
+      border-color: var(--green);
+      background: var(--green-pale);
+      transform: translateY(-1px);
+    }
+
+    .letter-button.is-active {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--white);
+    }
+
+    .alpha-section {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .alpha-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .alpha-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .alpha-word-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .alpha-word-item {
+      min-height: 112px;
+      padding: 14px 15px;
+      border: 1px solid #ece7dc;
+      border-radius: 6px;
+      background: var(--white);
+    }
+
+    .alpha-word-item .word {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.04em;
+    }
+
+    .alpha-word-item .meaning {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .alpha-word-item .meta {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--green-pale);
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .collection::before, .collection::after {
+      position: absolute;
+      top: -5px;
+      width: 46px;
+      height: 11px;
+      background: rgb(224 191 130 / 45%);
+      content: "";
+    }
+
+    .collection::before { left: 34px; transform: rotate(-3deg); }
+    .collection::after { right: 34px; transform: rotate(3deg); }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(210px, 1fr) minmax(165px, 220px) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-wrap { position: relative; }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      width: 17px;
+      height: 17px;
+      color: #899188;
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .search-input, .language-select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #e5e2d8;
+      border-radius: 4px;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 13px;
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    .search-input { padding: 0 14px 0 43px; }
+    .language-select { padding: 0 34px 0 13px; cursor: pointer; }
+    .search-input::placeholder { color: #a0a39a; }
+    .search-input:focus, .language-select:focus {
+      border-color: #86a08f;
+      box-shadow: 0 0 0 3px rgb(49 94 76 / 9%);
+    }
+
+    .entry-count {
+      justify-self: end;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .entry-count strong { color: var(--green); font-weight: 700; }
+
+    .results-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 25px 1px 13px;
+    }
+
+    .results-heading h2 {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .page-indicator { color: var(--muted); font-size: 12px; }
+
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .word-card {
+      min-height: 142px;
+      padding: 16px 17px 15px;
+      border: 1px solid #ebe8df;
+      border-radius: 4px;
+      background: var(--white);
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+
+    .word-card:hover {
+      border-color: #cfdbd0;
+      box-shadow: 0 7px 18px rgb(41 64 49 / 6%);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .language-tag {
+      display: inline-block;
+      max-width: 75%;
+      overflow: hidden;
+      padding: 4px 9px;
+      border-radius: 20px;
+      background: var(--green-pale);
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .035em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .serial { color: #aaa99f; font-size: 10px; }
+
+    .word {
+      margin: 12px 0 1px;
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1;
+      overflow-wrap: anywhere;
+    }
+
+    .meaning {
+      margin: 5px 0 0;
+      color: #727970;
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .meaning-label {
+      color: var(--coral);
+      font-weight: 700;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 48px 16px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 25px 0 1px;
+    }
+
+    .page-button {
+      min-width: 90px;
+      min-height: 37px;
+      padding: 7px 13px;
+      border: 1px solid #dcded4;
+      border-radius: 4px;
+      background: var(--white);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .18s, border-color .18s;
+    }
+
+    .page-button:not(:disabled):hover { border-color: var(--green); background: var(--green-pale); }
+    .page-button:disabled { color: #b9b9b1; cursor: not-allowed; }
+    .pagination-label { color: var(--muted); font-size: 12px; }
+
+    footer {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 26px 0 34px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    footer span { color: var(--coral); }
+
+    @media (max-width: 760px) {
+      .page-shell { width: min(100% - 28px, 600px); }
+      .intro { margin: 51px auto 34px; }
+      .alphabet-panel { padding: 20px 16px; }
+      .alphabet-nav { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .alpha-word-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .collection { padding: 20px 16px; }
+      .toolbar { grid-template-columns: 1fr 1fr; }
+      .search-wrap { grid-column: 1 / -1; }
+      .entry-count { grid-column: 1 / -1; justify-self: start; }
+      .word-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 440px) {
+      .page-shell { width: calc(100% - 22px); }
+      .edition { font-size: 9px; }
+      .alphabet-panel { padding: 18px 12px; }
+      .alphabet-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .alpha-word-list { grid-template-columns: 1fr; }
+      .alpha-header { flex-direction: column; align-items: flex-start; }
+      .collection { padding: 18px 12px; }
+      .word-grid { grid-template-columns: 1fr; gap: 9px; }
+      .word-card { min-height: 124px; }
+      .toolbar { gap: 9px; }
+      .language-select { font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-shell topbar">
+    <a class="brand" href="./index.html" aria-label="wordlist home">
+      <span>wordlist</span>
+    </a>
+    <nav class="topnav" aria-label="Main navigation">
+      <a href="#alphabets">alphabets</a>
+      <a href="#wordlist">wordlist</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="alphabet-panel" id="alphabets" aria-labelledby="alphabets-title">
+      <h2 class="alphabet-title" id="alphabets-title">alphabets</h2>
+      <div class="alphabet-nav" id="alphabet-nav"></div>
+      <div class="alpha-section">
+        <div class="alpha-header">
+          <span class="alpha-count" id="letter-count">0 words</span>
+        </div>
+        <div class="alpha-word-list" id="alphabet-results" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="collection" id="wordlist" aria-label="Wordlist">
+      <div class="toolbar">
+        <label class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.4" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m15.5 15.5 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <input class="search-input" id="search" type="search" placeholder="Find a word or meaning…" autocomplete="off" aria-label="Search words, meanings, or languages">
+        </label>
+        <label>
+          <span class="sr-only" hidden>Filter by source language</span>
+          <select class="language-select" id="language" aria-label="Filter by source language">
+            <option value="">All source languages</option>
+          </select>
+        </label>
+        <div class="entry-count" id="entry-count" aria-live="polite"></div>
+      </div>
+
+      <div class="results-heading">
+        <h2 id="results-title">The word collection</h2>
+        <span class="page-indicator" id="page-indicator"></span>
+      </div>
+      <div class="word-grid" id="word-grid" aria-live="polite"></div>
+      <nav class="pagination" aria-label="Wordlist pages">
+        <button class="page-button" id="previous" type="button">← Previous</button>
+        <span class="pagination-label" id="pagination-label"></span>
+        <button class="page-button" id="next" type="button">Next →</button>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="page-shell">Collected with curiosity <span aria-hidden="true">✳</span> Shared across languages</footer>
+
+  <script src="./words.js"></script>
+  <script>
+    const alphabetLetters = [
+      'a', 'á', 'i', 'í', 'u', 'ú', 'e', 'é', 'o', 'ó', 'k', 'k̅', 'q', 'q̅',
+      'c', 'c̅', 'j', 'j̅', 't', 't̅', 'd', 'd̅', 'n', 'p', 'f', 'b', 'b̅', 'm', 'y',
+      'r', 'l', 'v', 's', 's̅', 'h', 'x', 'z'
+    ];
+    const alphabetRanks = new Map(alphabetLetters.map((letter, index) => [letter, index]));
+    const alphabetTokens = [...alphabetLetters].sort((a, b) => b.length - a.length);
+
+    function compareWordEntries(leftEntry, rightEntry) {
+      function getUnits(value) {
+        const word = value.normalize('NFC').toLocaleLowerCase();
+        const units = [];
+        for (let index = 0; index < word.length;) {
+          const token = alphabetTokens.find((letter) => word.startsWith(letter, index));
+          if (token) {
+            units.push({ rank: alphabetRanks.get(token), value: token });
+            index += token.length;
+          } else {
+            const character = String.fromCodePoint(word.codePointAt(index));
+            units.push({ rank: alphabetLetters.length, value: character });
+            index += character.length;
+          }
+        }
+        return units;
+      }
+
+      const left = getUnits(leftEntry.word);
+      const right = getUnits(rightEntry.word);
+      const sharedLength = Math.min(left.length, right.length);
+      for (let index = 0; index < sharedLength; index += 1) {
+        if (left[index].rank !== right[index].rank) {
+          return left[index].rank - right[index].rank;
+        }
+        if (left[index].rank === alphabetLetters.length) {
+          const comparison = left[index].value.localeCompare(right[index].value);
+          if (comparison) return comparison;
+        }
+      }
+      return left.length - right.length || leftEntry.number - rightEntry.number;
+    }
+
+    (() => {
+      const words = Array.isArray(window.WORDS) ? window.WORDS : [];
+      const nav = document.getElementById('alphabet-nav');
+      const results = document.getElementById('alphabet-results');
+      const letterCount = document.getElementById('letter-count');
+
+      const letters = alphabetLetters;
+
+      const descriptions = [
+        'अ', 'आ', 'इ', 'ई', 'उ', 'ऊ', 'ए', 'ऐ', 'ओ', 'औ', 'क', 'ख', 'ग', 'घ',
+        'च', 'छ', 'ज', 'झ', 'ट · त', 'ठ · थ', 'ड · द', 'ढ · ध', 'ण · न', 'प', 'फ',
+        'ब', 'भ', 'म', 'य', 'र', 'ल', 'व', 'स', 'श', 'ह', 'क्ष', 'ज़'
+      ];
+
+      function normalizedLetter(value) {
+        const normalized = (value || '').trim().normalize('NFC').toLocaleLowerCase();
+        return alphabetTokens.find((letter) => normalized.startsWith(letter))
+          || Array.from(normalized)[0]
+          || null;
+      }
+
+      function getLetterWords(letter) {
+        const baseLetter = normalizedLetter(letter);
+        return words
+          .filter((item) => normalizedLetter(item.word) === baseLetter)
+          .sort(compareWordEntries);
+      }
+
+      function renderLetter(letter) {
+        const items = getLetterWords(letter);
+        letterCount.textContent = `${items.length} ${items.length === 1 ? 'word' : 'words'}`;
+        results.replaceChildren();
+
+        if (!items.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.textContent = 'No words start with this letter yet.';
+          results.append(empty);
+          return;
+        }
+
+        items.forEach((item) => {
+          const entry = document.createElement('article');
+          entry.className = 'alpha-word-item';
+          const word = document.createElement('h3');
+          word.className = 'word';
+          word.textContent = item.word;
+          const meaning = document.createElement('p');
+          meaning.className = 'meaning';
+          meaning.textContent = item.meaning;
+          const language = document.createElement('span');
+          language.className = 'meta';
+          language.textContent = item.language || 'Language';
+          entry.append(word, meaning, language);
+          results.append(entry);
+        });
+      }
+
+      letters.forEach((letter, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'letter-button';
+        button.dataset.letter = letter;
+        const label = document.createElement('span');
+        label.textContent = letter;
+        const description = document.createElement('span');
+        description.className = 'letter-description';
+        description.textContent = descriptions[index];
+        button.append(label, description);
+        button.setAttribute('aria-label', `${letter}: ${descriptions[index]}. View words beginning with ${letter}`);
+        button.addEventListener('click', () => {
+          nav.querySelectorAll('.letter-button').forEach((node) => node.classList.toggle('is-active', node === button));
+          renderLetter(letter);
+        });
+        nav.append(button);
+      });
+
+      const firstLetter = letters.find((letter) => getLetterWords(letter).length > 0) || 'a';
+      const initialButton = nav.querySelector(`[data-letter="${firstLetter}"]`);
+      if (initialButton) initialButton.classList.add('is-active');
+      renderLetter(firstLetter);
+    })();
+  </script>
+  <script>
+    (() => {
+      const pageSize = 36;
+      const words = (Array.isArray(window.WORDS) ? window.WORDS : [])
+        .slice()
+        .sort(compareWordEntries);
+      const search = document.getElementById("search");
+      const language = document.getElementById("language");
+      const grid = document.getElementById("word-grid");
+      const count = document.getElementById("entry-count");
+      const resultsTitle = document.getElementById("results-title");
+      const pageIndicator = document.getElementById("page-indicator");
+      const paginationLabel = document.getElementById("pagination-label");
+      const previous = document.getElementById("previous");
+      const next = document.getElementById("next");
+      let currentPage = 1;
+
+      const languageNames = [...new Set(words.map((item) => item.language).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b));
+      languageNames.forEach((name) => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        language.append(option);
+      });
+
+      function makeCard(item) {
+        const card = document.createElement("article");
+        card.className = "word-card";
+
+        const top = document.createElement("div");
+        top.className = "card-top";
+        const tag = document.createElement("span");
+        tag.className = "language-tag";
+        tag.textContent = item.language || "Language not listed";
+        const serial = document.createElement("span");
+        serial.className = "serial";
+        serial.textContent = `#${String(item.number).padStart(3, "0")}`;
+
+        top.append(tag, serial);
+
+        const word = document.createElement("h3");
+        word.className = "word";
+        word.textContent = item.word;
+
+        const meaning = document.createElement("p");
+        meaning.className = "meaning";
+        const label = document.createElement("span");
+        label.className = "meaning-label";
+        label.textContent = "Means ";
+        meaning.append(label, document.createTextNode(item.meaning));
+
+        card.append(top, word, meaning);
+        return card;
+      }
+
+      function render() {
+        const query = search.value.trim().toLocaleLowerCase();
+        const selectedLanguage = language.value;
+        const filtered = words.filter((item) => {
+          const matchesLanguage = !selectedLanguage || item.language === selectedLanguage;
+          const searchable = `${item.word} ${item.meaning} ${item.language} ${item.number}`.toLocaleLowerCase();
+          return matchesLanguage && searchable.includes(query);
+        });
+        const pageCount = Math.ceil(filtered.length / pageSize);
+        currentPage = Math.min(currentPage, Math.max(pageCount, 1));
+        const start = (currentPage - 1) * pageSize;
+        const visible = filtered.slice(start, start + pageSize);
+
+        grid.replaceChildren();
+        if (visible.length) {
+          grid.append(...visible.map(makeCard));
+        } else {
+          const empty = document.createElement("p");
+          empty.className = "empty-state";
+          empty.textContent = words.length ? "No words found — try another search." : "The wordlist could not be loaded.";
+          grid.append(empty);
+        }
+
+        count.innerHTML = `<strong>${filtered.length}</strong> ${filtered.length === 1 ? "word" : "words"}`;
+        resultsTitle.textContent = query || selectedLanguage ? "Your word discoveries" : "The word collection";
+        pageIndicator.textContent = filtered.length ? `Showing ${start + 1}–${start + visible.length} of ${filtered.length}` : "";
+        paginationLabel.textContent = `Page ${pageCount ? currentPage : 0} of ${pageCount}`;
+        previous.disabled = currentPage <= 1;
+        next.disabled = currentPage >= pageCount;
+      }
+
+      search.addEventListener("input", () => { currentPage = 1; render(); });
+      language.addEventListener("change", () => { currentPage = 1; render(); });
+      previous.addEventListener("click", () => { currentPage -= 1; render(); });
+      next.addEventListener("click", () => { currentPage += 1; render(); });
+      render();
+    })();
+  </script>
+</body>
+</html>
